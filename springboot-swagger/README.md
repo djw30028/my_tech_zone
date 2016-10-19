@@ -1,7 +1,5 @@
-# Spring Boot Hello World Example with JSP
+# Tech Zone
 
-## Guide
-https://hellokoding.com/spring-boot-hello-world-example-with-jsp/
 
 ## What you'll need
 - JDK 1.8 or later
