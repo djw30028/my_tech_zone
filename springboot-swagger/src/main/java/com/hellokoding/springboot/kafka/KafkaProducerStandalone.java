@@ -18,7 +18,7 @@ public class KafkaProducerStandalone {
     private static final String TOPIC = "helloworld";
     private static final String BROKER_HOST = "localhost:9092";
    
-	private void process_good() throws Throwable {
+/*	private void process_good() throws Throwable {
 		System.out.println(" KafkaProducerStandalone  ");
 		
 		Properties props = new Properties();
@@ -36,11 +36,18 @@ public class KafkaProducerStandalone {
 		     producer.send(new ProducerRecord<String, String>(TOPIC, Integer.toString(i), Integer.toString(i)));
 
 		 producer.close();
-	}
+	}*/
 	 
 	private void process() throws Throwable {
-		 for(int i = 0; i < 100; i++)
+		 for(int i = 0; i < 100; i++) {
 		   KafkaProducerExecutor.getInstance().sendTo(Integer.toString(i), Integer.toString(i));
+		   try {
+			   Thread.sleep(1000);
+		   }
+		   catch (InterruptedException e) {
+			   e.printStackTrace();
+		   }
+		 }
 	}
 	public static void main(String[] args) {
 		 try {
