@@ -45,24 +45,30 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<!-- <artifactId>spark-streaming-kafka-0-8_${scala.binary.version}</artifactId>
-			 <artifactId>spark-streaming-kafka-0-10_${scala.binary.version}</artifactId>
-			
-			 -->
-			 <artifactId>spark-streaming-kafka-0-8_${scala.binary.version}</artifactId>
-			
-			 <version>${scala.project.version}</version>
+			<!-- <artifactId>spark-streaming-kafka-0-8_${scala.binary.version}</artifactId> 
+				<artifactId>spark-streaming-kafka-0-10_${scala.binary.version}</artifactId> -->
+			<artifactId>spark-streaming-kafka-0-8_${scala.binary.version}</artifactId>
+
+			<version>${scala.project.version}</version>
 			<!-- <scope>provided</scope> -->
 		</dependency>
- 		
- 		<!-- Add kafka -->
+
+		<!-- Add kafka -->
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka_2.10</artifactId>
 			<version>0.10.0.0</version>
 		</dependency>
-		 
-		
+
+		<!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-20_2.11 -->
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch-spark-20_2.11</artifactId>
+			<version>5.0.0-rc1</version>
+		</dependency>
+
+
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -126,7 +132,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 

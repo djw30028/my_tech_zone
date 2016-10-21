@@ -40,7 +40,7 @@ public class KafkaProducerStandalone {
 	}*/
 	 
 	private void process() throws Throwable {
-		 for(int i = 0; i < 100; i++) {
+		 for(int i = 0; i < 20; i++) {
 		   KafkaProducerExecutor.getInstance().sendTo(Integer.toString(i), Integer.toString(i));
 		   try {
 			   Thread.sleep(1000);

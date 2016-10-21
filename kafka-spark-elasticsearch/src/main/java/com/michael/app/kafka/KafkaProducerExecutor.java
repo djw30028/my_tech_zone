@@ -31,6 +31,7 @@ public class KafkaProducerExecutor {
 	}
 	
 	public void sendTo(String topic, String key, String value) {
+		System.out.printf("send with topic %s, key=%s value=%s\n", topic, key, value);
 		producer.send(new ProducerRecord<String, String>(topic, key, value));
 	}
 	
