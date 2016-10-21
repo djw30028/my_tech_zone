@@ -1,10 +1,5 @@
 package com.michael.app.kafka;
 
-import java.util.Properties;
-
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import java.net.InetAddress;
 import java.util.Date;
 import java.util.Map;
