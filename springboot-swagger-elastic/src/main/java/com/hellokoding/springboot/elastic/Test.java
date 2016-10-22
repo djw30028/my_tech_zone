@@ -1,0 +1,140 @@
+package com.hellokoding.springboot.elastic;
+
+import java.net.InetAddress;
+import java.util.Date;
+import java.util.Map;
+
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.index.get.GetField;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+
+import com.hellokoding.springboot.CustomerRepository;
+import com.hellokoding.springboot.User;
+
+/**
+ * https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/java-docs-multi-get.html
+ * 
+ * @author michaelwang
+ *
+ */
+public class Test {
+	private CustomerRepository repository;
+	private TransportClient client;
+
+	
+	public static void main(String[] args) throws Throwable {
+		System.out.println("=== start Test ===");
+		Test test = new Test();
+		//test.putUserElastic2();
+		// test.putUserElastic();
+		//test.retrieve();
+		//test.retrieveByName();
+
+		//ElasticClientAccessor.getInstance().saveUser(new User("michael", "wang"));
+		
+		User tUser = ElasticClientAccessor.getInstance().retrieveUserByFirstName("michael");
+		System.out.println("tUser="+tUser);
+		
+		System.out.println("=== end Test ===");
+	}
+	
+
+	/**
+	 * https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/java-docs-multi-get.html
+	 * http://localhost:9200/_plugin/head/
+	 * 
+	 * 9300 is correct value, meaning connect to 9200 curl -XPUT
+	 * 'http://localhost:9200/twitter/tweet/1' -d '{"user" :
+	 * "kimchy","post_date" : "2009-11-15T14:12:12","message" : "trying out
+	 * Elastic Search"}' http://localhost:9200/_plugin/head/ { "_index":
+	 * "twitter", "_type": "tweet", "_id": "10", "_score": 1, "_source": {
+	 * "user": "michael", "post_date": "2015-11-15T14:12:12", "message": "trying
+	 * out Elastic Search" } }
+	 * 
+	 * @throws Throwable
+	 */
+	private void putUserElastic() throws Throwable {
+		if (client == null)
+			client = TransportClient.builder().build()
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300))
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+
+		IndexResponse response = null;
+
+		response = client.prepareIndex("users", "user", "1111")
+				.setSource(XContentFactory.jsonBuilder().startObject().field("user", "michael wang")
+						.field("postDate", new Date()).field("message", "who dont it work, michael").endObject())
+				.execute().actionGet();
+
+		System.out.println(response);
+
+	}
+
+	private void putUserElastic2() throws Throwable {
+		if (client == null)
+			client = TransportClient.builder().build()
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300))
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+
+		IndexResponse response = null;
+
+		response = client.prepareIndex().setIndex("users").setType("user") 
+				.setSource(XContentFactory.jsonBuilder().startObject().field("user", "cassie wang")
+						.field("postDate", new Date()).field("message", "who dont it work, michael").endObject())
+				.execute().actionGet();
+
+		System.out.println("response");
+
+	}
+
+	
+	/**
+	 * x={"user":"michael
+	 * wang","postDate":"2016-09-14T21:45:25.799Z","message":"who dont it work,
+	 * michael"}
+	 * 
+	 * @throws Throwable
+	 */
+	private void retrieve() throws Throwable {
+		if (client == null)
+			client = TransportClient.builder().build()
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300))
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+
+		org.elasticsearch.action.get.GetResponse getresponse = client.prepareGet("users", "user", "1111")
+				.setOperationThreaded(false).get();
+		GetField x = getresponse.getField("user");
+		String json = getresponse.getSourceAsString();
+
+		System.out.println("x=" + json);
+
+		System.out.println(getresponse);
+
+	}
+
+	private void retrieveByName() throws Throwable {
+		if (client == null)
+			client = TransportClient.builder().build()
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300))
+					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+
+		SearchResponse response = client.prepareSearch().setSearchType(SearchType.QUERY_AND_FETCH)
+				.setFetchSource(new String[] { "user" }, null).setQuery(QueryBuilders.termQuery("user", "michael"))
+				.execute().actionGet();
+
+		for (SearchHit hit : response.getHits()) {
+			Map map = hit.getSource();
+			System.out.println(map.toString());
+		}
+
+		System.out.println("dd");
+		return;
+	}
+
+}
