@@ -11,7 +11,7 @@ curl -X GET --header 'Accept: application/json' 'http://localhost:8088/bradways/
 
 
 ====================================================
-== Add AngularJS 2
+== Add AngularJS 2: https://angular.io/docs/js/latest/quickstart.html
 10/25/2016
 
 AngularJs2Controller
@@ -27,8 +27,12 @@ Step 3: Install packages
   
 Step 4: Create your application
   Create an app sub folder
+  Creaste new 
+  app/app.module.ts 
+  
   
 Step 5: Create a component and add it to your application
+  /app.component.ts
 
 Step 6: Start up your application
    app/main.ts
@@ -54,6 +58,29 @@ java -jar target/springboot-swagger-elastic-1.4.0.RELEASE.jar
 http://localhost:8088/angular2
 
 =============================================
-==
+== Integrate augularJS2, Spring boot maven
+== http://stackoverflow.com/questions/35704973/how-to-configure-angular2-application-using-typescript-with-maven
+
+Step 1: create controller 
+     @RequestMapping("/angular2maven")
+	 public String angular2maven(Model model, @RequestParam(value="name", required=false, defaultValue="World") String name) {
+	     model.addAttribute("name", name);
+	     return "angular2_maven/angular2maven";
+	 }
+  test: http://localhost:8088/angular2maven
+
+Step 2: modify pom.xml
+  copy or create new: src/main/resources/js/systemjs.config.js
+  
+Step 3: 
+ Copy package.json, tsconfig.json to src/main/resources/resources
+ mvn clean package --> generate node_modules
+ 
+Step 4: 
+ copy or create:
+ 1. app.component.ts
+  2. app/app.module.ts 
+  3. app/main.ts
+  
 
 

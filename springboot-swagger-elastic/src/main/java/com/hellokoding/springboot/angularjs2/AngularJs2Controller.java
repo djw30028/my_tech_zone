@@ -12,4 +12,11 @@ public class AngularJs2Controller {
 	     model.addAttribute("name", name);
 	     return "angular2";
 	 }
+	 
+	 @RequestMapping("/angular2maven")
+	 public String angular2maven(Model model, @RequestParam(value="name", required=false, defaultValue="World") String name) {
+	     model.addAttribute("name", name);
+	     return "angular2_maven/angular2maven";
+	 }
+	 
 }
