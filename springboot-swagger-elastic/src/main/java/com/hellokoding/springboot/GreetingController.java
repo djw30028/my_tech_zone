@@ -1,5 +1,7 @@
 package com.hellokoding.springboot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.validation.Valid;
@@ -60,5 +62,16 @@ public class GreetingController {
 		}
    	
         return createUser;
+    }
+    
+    @RequestMapping("/getdogs")
+    public List<AgPet> getDogs() {
+    	List<AgPet> dogList = new ArrayList<>();
+    	dogList.add(new AgPet(1, "Mr. Nicer"));
+    	dogList.add(new AgPet(2, "Narco"));
+    	dogList.add(new AgPet(3, "Bombasto"));
+    	
+    	
+    	return dogList;
     }
 }

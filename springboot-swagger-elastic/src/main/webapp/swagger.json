@@ -19,15 +19,16 @@
 		{
 			"name": "greeting",
 			"description": "Operations about greeting"
+		},
+		{
+			"name": "pets",
+			"description": "Operations about pets"
 		}
 	],
 	"schemes": [
 		"http"
 	],
 	"paths": {
- 
- 
-	 
 		"/bradways/greeting": {
 			"get": {
 				"tags": [
@@ -98,6 +99,34 @@
 					}
 				}
 			}
+		},
+		"/bradways/getdogs": {
+			"get": {
+				"tags": [
+					"pets"
+				],
+				"summary": "Get Dogs",
+				"description": "Returns dog list",
+				"operationId": "getdogs",
+				"produces": [
+					"application/json"
+				],
+				 
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$ref": "#/definitions/Dogs"
+						}
+					},
+					"400": {
+						"description": "Invalid dog supplied"
+					},
+					"404": {
+						"description": "dog not found"
+					}
+				}
+			}
 		} 
 	},	 	 
 	"securityDefinitions": {
@@ -144,7 +173,19 @@
 				"body"
 			],
 			"type": "object"
-		} 
+		},
+		"Dogs": {
+			"properties": {
+				"id": {
+					"description": "Id",
+					"type": "integer"
+				},
+				"name": {
+					"description": "name",
+					"type": "string"
+				}
+			}
+		}
 	},
 	"externalDocs": {
 		"description": "Find out more about Swagger",
