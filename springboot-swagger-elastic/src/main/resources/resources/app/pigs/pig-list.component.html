@@ -1,0 +1,10 @@
+<h2>Pigs</h2>
+    <p>List of pig: </p>
+    <ul class="demo-list-icon mdl-list">
+      <li class="mdl-list__item" *ngFor="let pig of pigs">
+        <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">{{pig.id}} - </i>
+            <a [routerLink]="['/pigs', pig.id]">{{ pig.name}}</a>
+        </span>
+      </li>
+    </ul>
